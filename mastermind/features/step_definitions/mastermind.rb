@@ -21,7 +21,7 @@ When /^I start a new game$/ do
   game.start
 end
 
-When /^I break the code on on the (\d+.*) guess$/ do |guess_count|
+When /^I break the code on the (\d+.*) guess$/ do |guess_count|
   @messenger = StringIO.new
   game = Mastermind::Game.new(@messenger)
   game.start(%w[r g y c])
@@ -36,9 +36,14 @@ Then /^I should see the message "(.*)"$/ do |message|
 end
 
 Then /^the mark should be (.*)$/ do |mark|
-  messages_should_include(mark)
+  @messenger.string.should =~ /Score for \[.*?\] is #{mark}/
 end
 
 Then /^the game should be over$/ do
   @game.should be_over
 end
+
+Then /^the game transcript should be$/ do |string|
+  @messenger.string.should == string
+end
+

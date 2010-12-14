@@ -2,15 +2,13 @@ module Mastermind
   class Scorer
     
     def initialize(code)
-
+      @code = code
     end
     
-    def guess(guess)
-
-    end
-    
-    def mark
-
+    def mark(these)
+      return 'b' if @code[0] == these[0]
+      return 'w' if these.include?(@code[0])
+      ""
     end
     
     private

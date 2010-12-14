@@ -15,8 +15,7 @@ module Mastermind
       context "no pegs are correct" do
 
         it "should return '' when nothing matches" do
-          @scorer.guess(%w[w w w w])
-          @scorer.mark.should == ""
+          @scorer.mark(%w[w w w w]).should == ""
         end
       
       end
@@ -24,13 +23,11 @@ module Mastermind
       context "one color correct" do
       
         it "should return 'b' when in the correct position" do
-          @scorer.guess(%w[r w w w])
-          @scorer.mark.should == "b"
+          @scorer.mark(%w[r w w w]).should == "b"
         end
 
         it "should return 'w' when /not/ in the correct position" do
-          @scorer.guess(%w[w w r w])
-          @scorer.mark.should == "w"
+          @scorer.mark(%w[w w r w]).should == "w"
         end
       
       end
