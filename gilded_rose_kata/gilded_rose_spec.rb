@@ -258,10 +258,7 @@ describe "#update_quality" do
       end
     end
   
-    context "conjured item" do
-      before { pending }
-      let(:name) { "Conjured Mana Cake" }
-  
+    shared_examples_for "a conjured item" do
       context "before the sell date" do
         let(:initial_sell_in) { 5 }
         it "should decrement quality by two" do
@@ -281,8 +278,8 @@ describe "#update_quality" do
   
       context "on sell date" do
         let(:initial_sell_in) { 0 }
-        it "should decrement quality by two" do
-          item.quality.should == initial_quality - 2
+        it "should decrement quality by four" do
+          item.quality.should == initial_quality - 4
         end
         it "should decrement sell_in by one" do
           item.sell_in.should == initial_sell_in - 1
@@ -298,8 +295,8 @@ describe "#update_quality" do
   
       context "after sell date" do
         let(:initial_sell_in) { -10 }
-        it "should decrement quality by two" do
-          item.quality.should == initial_quality - 2
+        it "should decrement quality by four" do
+          item.quality.should == initial_quality - 4
         end
         it "should decrement sell_in by one" do
           item.sell_in.should == initial_sell_in - 1
@@ -311,9 +308,20 @@ describe "#update_quality" do
             item.quality.should == initial_quality
           end
         end
+      end      
+    end
+    
+    context "Conjured Mana Cake" do
+      it_should_behave_like 'a conjured item' do
+        let(:name) { 'Conjured Mana Cake' }
       end
     end
-  
+    
+    context "Conjured Baby Shower" do
+      it_should_behave_like 'a conjured item' do
+        let(:name) { 'Conjured Baby Shower' }
+      end
+    end
   end
   
   context "with several objects" do
