@@ -51,6 +51,7 @@ def clamp_quality(value)
   [50, [0, value].max].min
 end
 
+
 # DO NOT CHANGE THINGS BELOW -----------------------------------------
 
 Item = Struct.new(:name, :sell_in, :quality)
