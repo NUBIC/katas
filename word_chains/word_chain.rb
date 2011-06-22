@@ -13,15 +13,17 @@ class WordChain
       
     return [s] if s == e
     return path + [s, e] if hamming_distance(s, e) == 1
+    return nil if path.size > 6
 
-    find_one_away(s).each do |candidate|
-      puts "Recursing on #{candidate.inspect} from #{s.inspect}"
+    shortest = nil
+    find_one_away(s, e).each do |candidate|
+      puts "Recursing on #{candidate.inspect} from #{s.inspect}; #{path.inspect} so far"
       next if path.include?(candidate)
       if result = chain(candidate, e, path + [s])
-        return result
+        shortest = result if (!shortest || shortest.size > result.size)
       end
     end
-    nil
+    shortest
   end
   
   private
@@ -38,10 +40,12 @@ class WordChain
     ct
   end
 
-  def self.find_one_away(s)
+  def self.find_one_away(s, e)
+    se_ham = hamming_distance(s, e)
     word_list.select { |w| w.length == s.length }.
       tap { |wl| puts "There are #{wl.size} strings of the same length as #{s.inspect}" }.
       select { |w| hamming_distance(s, w) == 1 }.
+      reject { |w| hamming_distance(w, e) > se_ham }.
       tap { |wl| puts "There are #{wl.size} strings one away from #{s.inspect}" }
   end
 

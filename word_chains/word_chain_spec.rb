@@ -29,5 +29,9 @@ describe WordChain do
     WordChain.chain('cat', 'dog').should == %w( cat cot cog dog )
   end
   
+  it "should work when going from ruby to code" do
+    WordChain.chain('ruby', 'code').should == %w( ruby rubs robs rods rode code )
+  end
+  
   
 end
